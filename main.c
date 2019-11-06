@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     // 引数チェック
     if(argc != 2) {
-        puts("Usage: ./main x86_filename");
+        printf("Usage: %s x86_filename\n", argv[0]);
         return 1;
     }
 
