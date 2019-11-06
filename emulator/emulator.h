@@ -2,6 +2,7 @@
 #define EMULATORH
 
 /* ヘッダファイル */
+#include <stdlib.h>
 #include <stdint.h>
 
 /* 定数 */
@@ -31,5 +32,9 @@ typedef struct {
     uint32_t eip;
 
 } Emulator;
+
+/* 関数 */
+Emulator *create_emu(size_t mem_size, uint32_t eip, uint32_t esp);
+void destroy_emu(Emulator *emu);
 
 #endif
