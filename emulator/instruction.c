@@ -13,7 +13,7 @@ void init_instruction_table()
         instructions[0xB8+idx] = mov_r32_imm32;
 
     // short_jmp
-    instructions[0xEB] = instructions;
+    instructions[0xEB] = short_jmp;
 }
 
 
