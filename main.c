@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 {
     FILE *binary;
     Emulator *emu;
+    init_instruction_table();
 
     // 引数チェック
     if(argc != 2) {
@@ -29,6 +30,21 @@ int main(int argc, char *argv[])
     // メモリにx86プログラムを配置する(8バイト単位)
     fread(emu->memory, 1, 0x200, binary);
     fclose(binary);
+
+    // 命令実行
+    while(emu->eip < MEMORY_SIZE) {
+        uint8_t opecode = get_code8(emu, 0);
+        if(instructions[opecode] == NULL){
+            printf("Not impl : 0x%x\n", opecode);
+            return 1;
+        }
+
+        instructions[opecode](emu);
+        if(emu->eip == 0x00) {
+            puts("End of program!!");
+            break;
+        }
+    }
 
     destroy_emu(emu);
     return 0;
