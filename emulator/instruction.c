@@ -23,6 +23,7 @@ void mov_r32_imm32(Emulator *emu)
     uint8_t reg = get_code8(emu, 0) - 0xB8;
     uint32_t val = get_code32(emu, 1);
     emu->registers[reg] = val;
+    emu->eip += 5;
     return;
 }
 
