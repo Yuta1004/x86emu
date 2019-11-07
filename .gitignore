@@ -1,3 +1,5 @@
 x86emu
+program
+program.asm
 
 *.o

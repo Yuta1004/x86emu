@@ -1,5 +1,6 @@
 CC = gcc
 GCC = gcc
+NASM = nasm
 SRCS = $(wildcard *.c emulator/*.c)
 OBJS = $(SRCS:.c=.o)
 ARGS =
@@ -13,6 +14,14 @@ all:
 
 build: $(OBJS)
 	$(GCC) -o x86emu $(OBJS) $(LDFLAGS)
+
+
+build-i386-program: program.asm
+	$(NASM) program.asm
+
+
+run-i386-program-on-emu: build program
+	make run ARGS=program
 
 
 run:
