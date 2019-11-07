@@ -50,6 +50,7 @@ uint32_t get_code32(Emulator *emu, int idx);
 
 /* 変数 */
 // instruction.c
-void* instructions[256];
+typedef void instruction_func(Emulator*);
+instruction_func* instructions[256];
 
 #endif
