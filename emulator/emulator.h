@@ -34,7 +34,13 @@ typedef struct {
 } Emulator;
 
 /* 関数 */
+// emulator.c
 Emulator *create_emu(size_t mem_size, uint32_t eip, uint32_t esp);
 void destroy_emu(Emulator *emu);
+
+// memory.c
+uint32_t get_code8(Emulator *emu, int idx);
+int32_t get_sign_code8(Emulator *emu, int idx);
+uint32_t get_code32(Emulator *emu, int idx);
 
 #endif
