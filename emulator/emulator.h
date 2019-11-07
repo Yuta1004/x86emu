@@ -39,6 +39,7 @@ Emulator *create_emu(size_t mem_size, uint32_t eip, uint32_t esp);
 void destroy_emu(Emulator *emu);
 
 // instruction.c
+void init_instruction_table();
 void mov_r32_imm32(Emulator *emu);
 void short_jmp(Emulator *emu);
 

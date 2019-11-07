@@ -4,7 +4,7 @@
 #include "emulator.h"
 
 /* オペコードとそれを処理する関数の対応表 */
-void init_instructions()
+void init_instruction_table()
 {
     memset(instructions, 0, sizeof(instructions));
 
