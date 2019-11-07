@@ -14,6 +14,7 @@ void mov_r32_imm32(Emulator *emu) {
 /* jmp(1byte) */
 void short_jmp(Emulator *emu) {
     int8_t adiff = get_sign_code8(emu, 1);
+    emu->eip += 2;      // short_jmp命令のサイズ
     emu->eip += adiff;
     return;
 }
