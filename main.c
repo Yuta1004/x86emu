@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    display_reg_emu(emu);
     destroy_emu(emu);
     return 0;
 }

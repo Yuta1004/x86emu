@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "emulator.h"
 
 /* エミュレータ作成 */
@@ -23,4 +24,12 @@ void destroy_emu(Emulator *emu)
 {
     free(emu->memory);
     free(emu);
+}
+
+/* レジスタ表示 */
+void display_reg_emu(Emulator *emu)
+{
+    static char* regs[]= {"EAX", "ECX", "EDX", "EBX", "ESP", "EBP", "ESI", "EDI"};
+    for(int idx = 0; idx < 8; ++ idx)
+        printf("%s: %d\n", regs[idx], emu->registers[idx]);
 }
