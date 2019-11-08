@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "emulator/emulator.h"
 
-#define MEMORY_SIZE 1000
+#define MEMORY_SIZE 0xffff
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     }
 
     // エミュレータ作成
-    emu = create_emu(MEMORY_SIZE, 0x0000, 0x7c00);
+    emu = create_emu(MEMORY_SIZE, 0x7c00, 0x7c00);
 
     // x86プログラムファイル読み込み
     binary = fopen(argv[1], "rb");
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     }
 
     // メモリにx86プログラムを配置する(8バイト単位)
-    fread(emu->memory, 1, 0x200, binary);
+    fread(emu->memory+0x7c00, 1, 0x200, binary);
     fclose(binary);
 
     // 命令実行
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
             return 1;
         }
 
-        printf("EIP: %4d, OpeCode: 0x%x\n", emu->eip, opecode);
+        printf("EIP: 0x%08x, OpeCode: 0x%x\n", emu->eip, opecode);
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
