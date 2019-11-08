@@ -24,3 +24,10 @@ uint32_t get_code32(Emulator *emu, int idx)
     val |= emu->memory[emu->eip+idx+3] << 24;
     return val;
 }
+
+/* 命令読み取り(32bit, 符号つき) */
+int32_t get_sign_code32(Emulator *emu, int idx)
+{
+    return (int32_t)get_code32(emu, idx);
+}
+

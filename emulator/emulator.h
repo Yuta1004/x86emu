@@ -48,6 +48,7 @@ void short_jmp(Emulator *emu);
 uint32_t get_code8(Emulator *emu, int idx);
 int32_t get_sign_code8(Emulator *emu, int idx);
 uint32_t get_code32(Emulator *emu, int idx);
+int32_t get_sign_code32(Emulator *emu, int idx);
 
 /* 変数 */
 // instruction.c
