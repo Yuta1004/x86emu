@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "emulator.h"
+#include "memory.h"
 
 /* 命令読み取り(8bit */
 uint32_t get_code8(Emulator *emu, int idx)

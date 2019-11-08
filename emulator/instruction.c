@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <string.h>
 #include "emulator.h"
+#include "memory.h"
+#include "instruction.h"
 
 /* オペコードとそれを処理する関数の対応表 */
 void init_instruction_table()

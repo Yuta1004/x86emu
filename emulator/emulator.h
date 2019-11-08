@@ -16,7 +16,7 @@
 #define ESI 6
 #define EDI 7
 
-/* 構造体 */
+/* 構造体(Emulator) */
 typedef struct {
 
     // 汎用レジスタ
@@ -34,25 +34,11 @@ typedef struct {
 } Emulator;
 
 /* 関数 */
-// emulator.c
 Emulator *create_emu(size_t mem_size, uint32_t eip, uint32_t esp);
 void destroy_emu(Emulator *emu);
 void display_reg_emu(Emulator *emu);
 
-// instruction.c
-void init_instruction_table();
-void mov_r32_imm32(Emulator *emu);
-void short_jmp(Emulator *emu);
-void near_jmp(Emulator *emu);
-
-// memory.c
-uint32_t get_code8(Emulator *emu, int idx);
-int32_t get_sign_code8(Emulator *emu, int idx);
-uint32_t get_code32(Emulator *emu, int idx);
-int32_t get_sign_code32(Emulator *emu, int idx);
-
 /* 変数 */
-// instruction.c
 typedef void instruction_func(Emulator*);
 instruction_func* instructions[256];
 

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "emulator/emulator.h"
+#include "emulator/instruction.h"
+#include "emulator/memory.h"
 
 #define MEMORY_SIZE 0xffff
 
