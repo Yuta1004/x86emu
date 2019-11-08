@@ -12,8 +12,9 @@ void init_instruction_table()
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0xB8+idx] = mov_r32_imm32;
 
-    // short_jmp
+    // jmp
     instructions[0xEB] = short_jmp;
+    instructions[0xE9] = near_jmp;
 }
 
 
@@ -27,11 +28,20 @@ void mov_r32_imm32(Emulator *emu)
     return;
 }
 
-/* jmp(1byte) */
+/* short jmp(8bit) */
 void short_jmp(Emulator *emu)
 {
     int8_t adiff = get_sign_code8(emu, 1);
-    emu->eip += 2;      // short_jmp命令のサイズ
+    emu->eip += 2;
+    emu->eip += adiff;
+    return;
+}
+
+/* near jmp(32bit) */
+void near_jmp(Emulator *emu)
+{
+    int32_t adiff = get_sign_code32(emu, 1);
+    emu->eip += 5;
     emu->eip += adiff;
     return;
 }

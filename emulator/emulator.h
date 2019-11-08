@@ -43,6 +43,7 @@ void display_reg_emu(Emulator *emu);
 void init_instruction_table();
 void mov_r32_imm32(Emulator *emu);
 void short_jmp(Emulator *emu);
+void near_jmp(Emulator *emu);
 
 // memory.c
 uint32_t get_code8(Emulator *emu, int idx);
