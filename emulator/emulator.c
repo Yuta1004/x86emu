@@ -32,4 +32,5 @@ void display_reg_emu(Emulator *emu)
     static char* regs[]= {"EAX", "ECX", "EDX", "EBX", "ESP", "EBP", "ESI", "EDI"};
     for(int idx = 0; idx < 8; ++ idx)
         printf("%s: 0x%08x\n", regs[idx], emu->registers[idx]);
+    printf("EIP: 0x%08x\n", emu->eip);
 }
