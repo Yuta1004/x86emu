@@ -71,6 +71,18 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
     }
 }
 
+/* Mod/RMの値を元にレジスタ読み込みを行う */
+uint32_t get_r32(Emulator *emu, ModRM *modrm)
+{
+    return get_reg32(emu, modrm->reg_idx);
+}
+
+/* Mod/RMの値を元にレジスタ書き込みを行う */
+void set_r32(Emulator *emu, ModRM *modrm, uint32_t val)
+{
+    set_reg32(emu, modrm->reg_idx, val);
+}
+
 /* Mod/RMの値を元にレジスタ/メモリ読み込みを行う */
 uint32_t get_rm32(Emulator *emu, ModRM *modrm)
 {

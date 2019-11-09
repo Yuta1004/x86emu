@@ -25,6 +25,8 @@ typedef struct {
 
 /* 関数 */
 void parse_modrm(Emulator *emu, ModRM *modrm);
+uint32_t get_r32(Emulator *emu, ModRM *modrm);
+void set_r32(Emulator *emu, ModRM *modrm, uint32_t val);
 uint32_t get_rm32(Emulator *emu, ModRM *modrm);
 void set_rm32(Emulator *emu, ModRM *modrm, uint32_t val);
 
