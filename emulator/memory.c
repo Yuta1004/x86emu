@@ -3,19 +3,19 @@
 #include "emulator.h"
 #include "memory.h"
 
-/* 命令読み取り(8bit */
+/* メモリ読み取り(8bit */
 uint32_t get_code8(Emulator *emu, int idx)
 {
     return emu->memory[emu->eip+idx];
 }
 
-/* 命令読み取り(8bit, 符号付き)*/
+/* メモリ読み取り(8bit, 符号付き)*/
 int32_t get_sign_code8(Emulator *emu, int idx)
 {
     return (int32_t)emu->memory[emu->eip+idx];
 }
 
-/* 命令読み取り(32bit) */
+/* メモリ読み取り(32bit) */
 uint32_t get_code32(Emulator *emu, int idx)
 {
     uint32_t val = 0;
@@ -26,9 +26,10 @@ uint32_t get_code32(Emulator *emu, int idx)
     return val;
 }
 
-/* 命令読み取り(32bit, 符号つき) */
+/* メモリ読み取り(32bit, 符号つき) */
 int32_t get_sign_code32(Emulator *emu, int idx)
 {
     return (int32_t)get_code32(emu, idx);
 }
+
 
