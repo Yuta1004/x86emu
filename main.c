@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     // 命令実行
     while(emu->eip < MEMORY_SIZE) {
-        uint8_t opecode = get_code8(emu, 0);
+        uint8_t opecode = read_mem8(emu, 0);
         if(instructions[opecode] == NULL){
             printf("Not impl : 0x%x\n", opecode);
             return 1;
