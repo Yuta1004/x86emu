@@ -4,13 +4,13 @@
 #include "memory.h"
 
 /* 命令読み取り(8bit) */
-uint32_t get_code8(Emulator *emu, int idx)
+uint8_t get_code8(Emulator *emu, int idx)
 {
     return emu->memory[emu->eip+idx];
 }
 
 /* 命令読み取り(8bit, 符号付き)*/
-int32_t get_sign_code8(Emulator *emu, int idx)
+int8_t get_sign_code8(Emulator *emu, int idx)
 {
     return (int32_t)get_code8(emu, idx);
 }
@@ -33,13 +33,13 @@ int32_t get_sign_code32(Emulator *emu, int idx)
 }
 
 /* メモリ読み取り(8bit) */
-uint32_t read_mem8(Emulator *emu, uint32_t addr)
+uint8_t read_mem8(Emulator *emu, uint32_t addr)
 {
     return emu->memory[addr];
 }
 
 /* メモリ読み取り(8bit, 符号付き)*/
-int32_t read_sign_mem8(Emulator *emu, uint32_t addr)
+int8_t read_sign_mem8(Emulator *emu, uint32_t addr)
 {
     return (int32_t)read_mem8(emu, addr);
 }
