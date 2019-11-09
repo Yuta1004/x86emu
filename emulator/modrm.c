@@ -5,6 +5,7 @@
 #include "memory.h"
 #include "modrm.h"
 
+/* Mod/RMの値を解析する */
 void parse_modrm(Emulator *emu, ModRM *modrm)
 {
     int aidx = 0;
