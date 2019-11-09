@@ -1,9 +1,11 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdint.h>
 #include "emulator.h"
 #include "memory.h"
 #include "modrm.h"
+#include "register.h"
 
 /* Mod/RMの値を解析する */
 void parse_modrm(Emulator *emu, ModRM *modrm)
@@ -28,5 +30,43 @@ void parse_modrm(Emulator *emu, ModRM *modrm)
     } else if(modrm->mod == 0b10) {
         modrm->disp8 = read_sign_mem8(emu, (++aidx));
         emu->eip += 1;
+    }
+}
+
+/* Mod/RMの値を元にメモリアドレスを計算する */
+uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
+{
+
+    switch(modrm->mod) {
+    case 0b00:
+        if(modrm->rm == 0b100) {
+            puts("Not implemented => Mod: 00(0) , R/M: 100(4)");
+            exit(1);
+        } else if(modrm->rm == 0b101) {
+            return modrm->disp32;
+        } else {
+            return get_reg32(emu, modrm->rm);
+        }
+
+    case 0b01:
+        if(modrm->rm == 0b100) {
+            puts("Not implemented => Mod: 01(1), R/M: 100(4)");
+            exit(1);
+        } else {
+            return get_reg32(emu, modrm->rm) + modrm->disp8;
+        }
+
+    case 0b10:
+        if(modrm->rm == 0b100) {
+            puts("Not implemented => Mod: 10(2), R/M: 100(4)");
+            exit(1);
+        } else {
+            return get_reg32(emu, modrm->rm) + modrm->disp32;
+        }
+
+    case 0b11:
+    default:
+        puts("Not implemented => Mod: 11(3)");
+        exit(1);
     }
 }
