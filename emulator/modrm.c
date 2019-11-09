@@ -70,3 +70,23 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
         exit(1);
     }
 }
+
+/* Mod/RMの値を元にレジスタ/メモリ読み込みを行う */
+uint32_t get_rm32(Emulator *emu, ModRM *modrm)
+{
+    if(modrm->mod == 0b11) {
+        return get_reg32(emu, modrm->rm);
+    } else {
+        return read_mem32(emu, calc_mem_addr(emu, modrm));
+    }
+}
+
+/* Mod/RMの値を元にレジスタ/メモリ書き込みを行う */
+void set_rm32(Emulator *emu, ModRM *modrm, uint32_t val)
+{
+    if(modrm->mod == 0b11) {
+        set_reg32(emu, modrm->rm, val);
+    } else {
+        write_mem32(emu, calc_mem_addr(emu, modrm), val);
+    }
+}
