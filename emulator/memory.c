@@ -29,7 +29,7 @@ uint32_t get_code32(Emulator *emu, int idx)
 /* 命令読み取り(32bit, 符号つき) */
 int32_t get_sign_code32(Emulator *emu, int idx)
 {
-    return (int32_t)read_mem32(emu, idx);
+    return (int32_t)get_code32(emu, idx);
 }
 
 /* メモリ読み取り(8bit) */
