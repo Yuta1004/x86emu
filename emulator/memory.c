@@ -32,3 +32,16 @@ int32_t read_sign_mem32(Emulator *emu, int idx)
     return (int32_t)read_mem32(emu, idx);
 }
 
+/* メモリ書き込み(8bit) */
+void write_mem8(Emulator *emu, uint32_t addr, uint32_t val)
+{
+    emu->memory[addr] = val & 0xFF;
+}
+
+/* メモリ書き込み(32bit) */
+void write_mem32(Emulator *emu, uint32_t addr, uint32_t val)
+{
+    for(int idx = 0; idx < 4; ++ idx) {
+        write_mem8(emu, addr+idx, val >> (idx*8));
+    }
+}
