@@ -40,7 +40,7 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
     switch(modrm->mod) {
     case 0b00:
         if(modrm->rm == 0b100) {
-            puts("Not implemented => Mod: 00(0) , R/M: 100(4)");
+            puts("Not implemented => Mod: 00(0) , R/M: 100(4)");    // TODO
             exit(1);
         } else if(modrm->rm == 0b101) {
             return modrm->disp32;
@@ -50,7 +50,7 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
 
     case 0b01:
         if(modrm->rm == 0b100) {
-            puts("Not implemented => Mod: 01(1), R/M: 100(4)");
+            puts("Not implemented => Mod: 01(1), R/M: 100(4)");     // TODO
             exit(1);
         } else {
             return get_reg32(emu, modrm->rm) + modrm->disp8;
@@ -58,7 +58,7 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
 
     case 0b10:
         if(modrm->rm == 0b100) {
-            puts("Not implemented => Mod: 10(2), R/M: 100(4)");
+            puts("Not implemented => Mod: 10(2), R/M: 100(4)");     // TODO
             exit(1);
         } else {
             return get_reg32(emu, modrm->rm) + modrm->disp32;
@@ -66,7 +66,7 @@ uint32_t calc_mem_addr(Emulator *emu, ModRM *modrm)
 
     case 0b11:
     default:
-        puts("Not implemented => Mod: 11(3)");
+        puts("Not implemented => Mod: 11(3)");                      // TODO
         exit(1);
     }
 }
