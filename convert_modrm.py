@@ -54,7 +54,7 @@ def main():
     mod, reg, rm = convert_modrm(modrm)
     print("MOD:", format(mod, "02b"))
     print("REG:", format(reg, "03b"))
-    print("R/M:", format(rm,  "02b"))
+    print("R/M:", format(rm,  "03b"))
     print("address: ", format_mod_rm(mod, rm))
     print("register:", format_reg(reg))
 
