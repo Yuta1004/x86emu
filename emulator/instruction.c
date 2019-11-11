@@ -34,6 +34,18 @@ void mov_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, val);
 }
 
+/* add */
+void add_rm32_r32(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+    uint32_t val_a_rm32 = get_rm32(emu, &modrm);
+    uint32_t val_b_r32 = get_r32(emu, &modrm);
+    set_rm32(emu, &modrm, val_a_rm32+val_b_r32);
+}
+
+
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -61,6 +73,9 @@ void init_instruction_table()
         instructions[0xB8+idx] = mov_r32_imm32;
     instructions[0x89] = mov_rm32_r32;
     instructions[0x8B] = mov_r32_rm32;
+
+    // add
+    instructions[0x01] = add_rm32_r32;
 
     // jmp
     instructions[0xEB] = short_jmp;
