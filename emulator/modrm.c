@@ -10,25 +10,24 @@
 /* Mod/RMの値を解析する */
 void parse_modrm(Emulator *emu, ModRM *modrm)
 {
-    int aidx = 0;
     memset(modrm, 0, sizeof(ModRM));
 
-    uint8_t code = get_code8(emu, aidx);
+    uint8_t code = get_code8(emu, 0);
     modrm->mod     = (code & 0b11000000) >> 6;
     modrm->opecode = (code & 0b00111000) >> 3;
     modrm->rm      = (code & 0b00000111) >> 0;
     emu->eip += 1;
 
     if(modrm->mod != 0b11 && modrm->rm == 0b100){
-        modrm->sib = get_code8(emu, (++aidx));
+        modrm->sib = get_code8(emu, 0);
         emu->eip += 1;
     }
 
-    if((modrm->mod == 0b00 && modrm->rm == 0b101) || modrm->mod == 0b01) {
-        modrm->disp32 = get_code32(emu, (++aidx));
+    if((modrm->mod == 0b00 && modrm->rm == 0b101) || modrm->mod == 0b10) {
+        modrm->disp32 = get_code32(emu, 0);
         emu->eip += 4;
-    } else if(modrm->mod == 0b10) {
-        modrm->disp8 = get_sign_code8(emu, (++aidx));
+    } else if(modrm->mod == 0b01) {
+        modrm->disp8 = get_sign_code8(emu, 0);
         emu->eip += 1;
     }
 }
