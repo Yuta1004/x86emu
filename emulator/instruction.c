@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include "emulator.h"
@@ -45,6 +46,16 @@ void add_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, val_a_rm32+val_b_r32);
 }
 
+void add_r32_rm32(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+    uint32_t val_a_r32 = get_r32(emu, &modrm);
+    uint32_t val_b_rm32 = get_rm32(emu, &modrm);
+    set_r32(emu, &modrm, val_a_r32+val_b_rm32);
+}
+
 
 /* jmp */
 void short_jmp(Emulator *emu)
@@ -75,7 +86,8 @@ void init_instruction_table()
     instructions[0x8B] = mov_r32_rm32;
 
     // add
-    instructions[0x01] = add_rm32_r32;
+    instructions[0x01] = add_rm32_r32;  // add_rm16_r16
+    instructions[0x03] = add_r32_rm32;  // add_r16_rm16
 
     // jmp
     instructions[0xEB] = short_jmp;
