@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
             return 1;
         }
 
-        printf("EIP: 0x%08x, OpeCode: 0x%x\n", emu->eip, opecode);
+        printf("EIP: 0x%08x, OpeCode: 0x%02x\n", emu->eip, opecode);
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
