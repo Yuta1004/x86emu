@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
-            puts("End of program!!");
+            puts("\nEnd of program!!\n");
             break;
         }
     }
