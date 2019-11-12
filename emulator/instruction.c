@@ -83,6 +83,12 @@ void inc_r32(Emulator *emu)
     emu->eip += 1;
 }
 
+void inc_rm32(Emulator *emu, ModRM *modrm)
+{
+    uint32_t rm32 = get_rm32(emu, modrm);
+    set_rm32(emu, modrm, rm32+1);
+}
+
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -118,6 +124,23 @@ void code_83(Emulator *emu)
     }
 }
 
+void code_ff(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+
+    switch(modrm.opecode){
+    case 0:
+        inc_rm32(emu, &modrm);
+        break;
+
+    default:
+        printf("Not implemented : ff /\%d\n", modrm.opecode);
+        break;
+    }
+}
+
 /* オペコードとそれを処理する関数の対応表 */
 void init_instruction_table()
 {
@@ -140,6 +163,7 @@ void init_instruction_table()
     // inc
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0x40+idx] = inc_r32;
+    instructions[0xff] = code_ff;
 
     // jmp
     instructions[0xEB] = short_jmp;
