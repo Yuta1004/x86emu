@@ -89,6 +89,14 @@ void inc_rm32(Emulator *emu, ModRM *modrm)
     set_rm32(emu, modrm, rm32+1);
 }
 
+/* dec */
+void dec_r32(Emulator *emu)
+{
+    uint8_t reg = get_code8(emu, 0) - 0x48;
+    emu->registers[reg] -= 1;
+    emu->eip += 1;
+}
+
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -164,6 +172,10 @@ void init_instruction_table()
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0x40+idx] = inc_r32;
     instructions[0xff] = code_ff;
+
+    // dec
+    for(int idx = 0; idx < 8; ++ idx)
+        instructions[0x48+idx] = dec_r32;
 
     // jmp
     instructions[0xEB] = short_jmp;
