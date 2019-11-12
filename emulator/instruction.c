@@ -97,6 +97,12 @@ void dec_r32(Emulator *emu)
     emu->eip += 1;
 }
 
+void dec_rm32(Emulator *emu, ModRM *modrm)
+{
+    uint32_t val = get_rm32(emu, modrm);
+    set_rm32(emu, modrm, val-1);
+}
+
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -141,6 +147,10 @@ void code_ff(Emulator *emu)
     switch(modrm.opecode){
     case 0:
         inc_rm32(emu, &modrm);
+        break;
+
+    case 1:
+        dec_rm32(emu, &modrm);
         break;
 
     default:
