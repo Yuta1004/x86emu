@@ -75,6 +75,14 @@ void sub_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, rm32-r32);
 }
 
+/* inc */
+void inc_r32(Emulator *emu)
+{
+    uint8_t reg = get_code8(emu, 0) - 0x40;
+    emu->registers[reg] += 1;
+    emu->eip += 1;
+}
+
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -128,6 +136,10 @@ void init_instruction_table()
     // sub
     instructions[0x83] = code_83;       // sub_rm32_imm8, sub_rm16_imm8
     instructions[0x29] = sub_rm32_r32;  // sub_rm32_r32
+
+    // inc
+    for(int idx = 0; idx < 8; ++ idx)
+        instructions[0x40+idx] = inc_r32;
 
     // jmp
     instructions[0xEB] = short_jmp;
