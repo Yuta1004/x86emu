@@ -56,6 +56,33 @@ void add_r32_rm32(Emulator *emu)
     set_r32(emu, &modrm, val_a_r32+val_b_rm32);
 }
 
+/* sub */
+void sub_rm32_imm8(Emulator *emu, ModRM *modrm)
+{
+    uint32_t val_a_r32 = get_rm32(emu, modrm);
+    int8_t val_b_imm8 = get_sign_code8(emu, 0);
+    printf("%d %d\n", val_a_r32, val_b_imm8);
+    set_rm32(emu, modrm, val_a_r32-val_b_imm8);
+    emu->eip += 1;
+}
+
+void code_83(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+
+    switch(modrm.opecode) {
+    case 5:
+        sub_rm32_imm8(emu, &modrm);
+        break;
+
+    default:
+        printf("Not implemented : 83 /%d\n", modrm.opecode);
+        break;
+    }
+}
+
 
 /* jmp */
 void short_jmp(Emulator *emu)
@@ -88,6 +115,9 @@ void init_instruction_table()
     // add
     instructions[0x01] = add_rm32_r32;  // add_rm16_r16
     instructions[0x03] = add_r32_rm32;  // add_r16_rm16
+
+    // sub
+    instructions[0x83] = code_83;       // sub_rm32_imm8, sub_rm16_imm8
 
     // jmp
     instructions[0xEB] = short_jmp;
