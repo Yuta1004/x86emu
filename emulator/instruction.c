@@ -75,24 +75,6 @@ void sub_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, rm32-r32);
 }
 
-void code_83(Emulator *emu)
-{
-    emu->eip += 1;
-    ModRM modrm;
-    parse_modrm(emu, &modrm);
-
-    switch(modrm.opecode) {
-    case 5:
-        sub_rm32_imm8(emu, &modrm);
-        break;
-
-    default:
-        printf("Not implemented : 83 /%d\n", modrm.opecode);
-        break;
-    }
-}
-
-
 /* jmp */
 void short_jmp(Emulator *emu)
 {
@@ -108,6 +90,24 @@ void near_jmp(Emulator *emu)
     emu->eip += 5;
     emu->eip += adiff;
     return;
+}
+
+/* code func */
+void code_83(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+
+    switch(modrm.opecode) {
+    case 5:
+        sub_rm32_imm8(emu, &modrm);
+        break;
+
+    default:
+        printf("Not implemented : 83 /%d\n", modrm.opecode);
+        break;
+    }
 }
 
 /* オペコードとそれを処理する関数の対応表 */
