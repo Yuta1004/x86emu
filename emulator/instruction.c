@@ -65,6 +65,16 @@ void sub_rm32_imm8(Emulator *emu, ModRM *modrm)
     emu->eip += 1;
 }
 
+void sub_rm32_r32(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+    uint32_t rm32 = get_rm32(emu, &modrm);
+    uint32_t r32 = get_r32(emu, &modrm);
+    set_rm32(emu, &modrm, rm32-r32);
+}
+
 void code_83(Emulator *emu)
 {
     emu->eip += 1;
@@ -117,6 +127,7 @@ void init_instruction_table()
 
     // sub
     instructions[0x83] = code_83;       // sub_rm32_imm8, sub_rm16_imm8
+    instructions[0x29] = sub_rm32_r32;  // sub_rm32_r32
 
     // jmp
     instructions[0xEB] = short_jmp;
