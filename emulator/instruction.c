@@ -41,9 +41,9 @@ void add_rm32_r32(Emulator *emu)
     emu->eip += 1;
     ModRM modrm;
     parse_modrm(emu, &modrm);
-    uint32_t val_a_rm32 = get_rm32(emu, &modrm);
-    uint32_t val_b_r32 = get_r32(emu, &modrm);
-    set_rm32(emu, &modrm, val_a_rm32+val_b_r32);
+    uint32_t rm32 = get_rm32(emu, &modrm);
+    uint32_t r32 = get_r32(emu, &modrm);
+    set_rm32(emu, &modrm, rm32+r32);
 }
 
 void add_r32_rm32(Emulator *emu)
@@ -51,18 +51,17 @@ void add_r32_rm32(Emulator *emu)
     emu->eip += 1;
     ModRM modrm;
     parse_modrm(emu, &modrm);
-    uint32_t val_a_r32 = get_r32(emu, &modrm);
-    uint32_t val_b_rm32 = get_rm32(emu, &modrm);
-    set_r32(emu, &modrm, val_a_r32+val_b_rm32);
+    uint32_t r32 = get_r32(emu, &modrm);
+    uint32_t rm32 = get_rm32(emu, &modrm);
+    set_r32(emu, &modrm, r32+rm32);
 }
 
 /* sub */
 void sub_rm32_imm8(Emulator *emu, ModRM *modrm)
 {
-    uint32_t val_a_r32 = get_rm32(emu, modrm);
-    int8_t val_b_imm8 = get_sign_code8(emu, 0);
-    printf("%d %d\n", val_a_r32, val_b_imm8);
-    set_rm32(emu, modrm, val_a_r32-val_b_imm8);
+    uint32_t r32 = get_rm32(emu, modrm);
+    int8_t imm8 = get_sign_code8(emu, 0);
+    set_rm32(emu, modrm, r32-imm8);
     emu->eip += 1;
 }
 
