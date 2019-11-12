@@ -35,6 +35,13 @@ void mov_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, val);
 }
 
+void mov_rm32_imm32(Emulator *emu, ModRM *modrm)
+{
+    uint32_t imm32 = get_code32(emu, 0);
+    set_rm32(emu, modrm, imm32);
+    emu->eip += 4;
+}
+
 /* add */
 void add_rm32_r32(Emulator *emu)
 {
@@ -138,6 +145,23 @@ void code_83(Emulator *emu)
     }
 }
 
+void code_c7(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+
+    switch(modrm.opecode){
+    case 0:
+        mov_rm32_imm32(emu, &modrm);
+        break;
+
+    default:
+        printf("Not implemented : c7 /%d\n", modrm.opecode);
+        break;
+    }
+}
+
 void code_ff(Emulator *emu)
 {
     emu->eip += 1;
@@ -169,6 +193,7 @@ void init_instruction_table()
         instructions[0xB8+idx] = mov_r32_imm32;
     instructions[0x89] = mov_rm32_r32;
     instructions[0x8B] = mov_r32_rm32;
+    instructions[0xC7] = code_c7;
 
     // add
     instructions[0x01] = add_rm32_r32;  // add_rm16_r16
