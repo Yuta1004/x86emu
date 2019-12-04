@@ -37,19 +37,21 @@ int main(int argc, char *argv[])
     while(emu->eip < MEMORY_SIZE) {
         uint8_t opecode = get_code8(emu, 0);
         if(instructions[opecode] == NULL){
-            printf("Not impl : 0x%x\n", opecode);
-            return 1;
+            printf("Not impl => EIP: 0x%08x, Opecode: 0x%02x\n", emu->eip, opecode);
+            puts("!!EMULATOR CRASH!!!");
+            break;
         }
 
         printf("EIP: 0x%08x, OpeCode: 0x%02x\n", emu->eip, opecode);
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
-            puts("\nEnd of program!!\n");
+            puts("!!End of program!!");
             break;
         }
     }
 
+    puts("");
     display_reg_emu(emu);
     destroy_emu(emu);
     return 0;
