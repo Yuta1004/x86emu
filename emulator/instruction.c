@@ -6,6 +6,8 @@
 #include "memory.h"
 #include "instruction.h"
 #include "modrm.h"
+#include "stack.h"
+#include "register.h"
 
 /* mov */
 void mov_r32_imm32(Emulator *emu)
@@ -127,6 +129,23 @@ void near_jmp(Emulator *emu)
     return;
 }
 
+/* push */
+void push_r32(Emulator *emu)
+{
+    uint8_t reg = get_code8(emu, 0) - 0x50;
+    push32(emu, get_reg32(emu, reg));
+    emu->eip += 1;
+}
+
+/* pop */
+void pop_r32(Emulator *emu)
+{
+    uint8_t reg = get_code8(emu, 0) - 0x58;
+    uint32_t val = pop32(emu);
+    set_reg32(emu, reg, val);
+    emu->eip += 1;
+}
+
 /* code func */
 void code_83(Emulator *emu)
 {
@@ -215,4 +234,12 @@ void init_instruction_table()
     // jmp
     instructions[0xEB] = short_jmp;
     instructions[0xE9] = near_jmp;
+
+    // push
+    for(int idx = 0; idx < 8; ++ idx)
+        instructions[0x50+idx] = push_r32;
+
+    // pop
+    for(int idx = 0; idx < 8; ++ idx)
+        instructions[0x58+idx] = pop_r32;
 }
