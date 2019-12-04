@@ -1,6 +1,7 @@
 CC = gcc
 GCC = gcc
 NASM = nasm
+HEXDUMP = hexdump
 SRCS = $(wildcard *.c emulator/*.c)
 OBJS = $(SRCS:.c=.o)
 ARGS =
@@ -18,6 +19,7 @@ build: $(OBJS)
 
 build-i386-program: program.asm
 	$(NASM) program.asm
+	$(HEXDUMP) program
 
 
 run-i386-program-on-emu: build program
