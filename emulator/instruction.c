@@ -146,6 +146,23 @@ void pop_r32(Emulator *emu)
     emu->eip += 1;
 }
 
+/* call */
+void call_rel32(Emulator *emu)
+{
+    int32_t diff = get_sign_code32(emu, 1);
+    emu->eip += 5;
+    push32(emu, emu->eip);
+    emu->eip += diff;
+}
+
+/* ret */
+void ret(Emulator *emu)
+{
+    uint32_t addr = pop32(emu);
+    emu->eip = addr;
+}
+
+
 /* code func */
 void code_83(Emulator *emu)
 {
@@ -242,4 +259,10 @@ void init_instruction_table()
     // pop
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0x58+idx] = pop_r32;
+
+    // call
+    instructions[0xe8] = call_rel32;
+
+    // ret
+    instructions[0xc3] = ret;
 }
