@@ -170,6 +170,14 @@ void ret(Emulator *emu)
     emu->eip = addr;
 }
 
+/* leave */
+void leave(Emulator *emu)
+{
+    set_reg32(emu, ESP, get_reg32(emu, EBP));
+    set_reg32(emu, EBP, pop32(emu));
+    emu->eip += 1;
+}
+
 
 /* code func */
 void code_83(Emulator *emu)
@@ -277,4 +285,7 @@ void init_instruction_table()
 
     // ret
     instructions[0xc3] = ret;
+
+    // leave
+    instructions[0xc9] = leave;
 }
