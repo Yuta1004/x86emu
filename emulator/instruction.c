@@ -65,6 +65,14 @@ void add_r32_rm32(Emulator *emu)
     set_r32(emu, &modrm, r32+rm32);
 }
 
+void add_rm32_imm8(Emulator *emu, ModRM *modrm)
+{
+    uint32_t rm32 = get_rm32(emu, modrm);
+    int8_t imm8 = get_sign_code8(emu, 0);
+    set_rm32(emu, modrm, rm32+imm8);
+    emu->eip += 1;
+}
+
 /* sub */
 void sub_rm32_imm8(Emulator *emu, ModRM *modrm)
 {
@@ -171,6 +179,10 @@ void code_83(Emulator *emu)
     parse_modrm(emu, &modrm);
 
     switch(modrm.opecode) {
+    case 0:
+        add_rm32_imm8(emu, &modrm);
+        break;
+
     case 5:
         sub_rm32_imm8(emu, &modrm);
         break;
