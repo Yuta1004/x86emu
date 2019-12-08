@@ -4,6 +4,7 @@
 #include "emulator/emulator.h"
 #include "emulator/instruction.h"
 #include "emulator/memory.h"
+#include "emulator/decode.h"
 
 #define MEMORY_SIZE 0xffff
 
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     FILE *binary;
     Emulator *emu;
     init_instruction_table();
+    init_opecode_dec_table();
 
     // 引数チェック
     if(argc != 2) {
@@ -42,7 +44,8 @@ int main(int argc, char *argv[])
             break;
         }
 
-        printf("EIP: 0x%08x, OpeCode: 0x%02x\n", emu->eip, opecode);
+        char *dec_str = opecode_dec_table[opecode];
+        printf("EIP: 0x%08x, OpeCode: 0x%02x, Decipher: %s\n", emu->eip, opecode, dec_str);
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
