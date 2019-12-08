@@ -145,6 +145,13 @@ void push_r32(Emulator *emu)
     emu->eip += 1;
 }
 
+void push_imm8(Emulator *emu)
+{
+    uint8_t val = get_code8(emu, 1);
+    push32(emu, val);
+    emu->eip += 2;
+}
+
 /* pop */
 void pop_r32(Emulator *emu)
 {
@@ -275,17 +282,18 @@ void init_instruction_table()
     // push
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0x50+idx] = push_r32;
+    instructions[0x6A] = push_imm8;
 
     // pop
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0x58+idx] = pop_r32;
 
     // call
-    instructions[0xe8] = call_rel32;
+    instructions[0xE8] = call_rel32;
 
     // ret
-    instructions[0xc3] = ret;
+    instructions[0xC3] = ret;
 
     // leave
-    instructions[0xc9] = leave;
+    instructions[0xC9] = leave;
 }

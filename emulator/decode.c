@@ -36,6 +36,7 @@ void init_opecode_dec_table()
     /* push */
     for(int idx = 0; idx < 8; ++ idx)
         opecode_dec_table[0x50+idx] = "push_r32";
+    opecode_dec_table[0x6A] = "push_imm8";
 
     /* pop */
     for(int idx = 0; idx < 8; ++ idx)
