@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         }
 
         char *dec_str = opecode_dec_table[opecode];
-        printf("EIP: 0x%08x, OpeCode: 0x%02x, Decipher: %s\n", emu->eip, opecode, dec_str);
+        printf("EIP: 0x%08x, OpeCode: 0x%02x, Inst: %s\n", emu->eip, opecode, dec_str);
 
         instructions[opecode](emu);
         if(emu->eip == 0x00) {
