@@ -11,7 +11,7 @@ i386LD_OPTS = --entry=start --oformat=binary -Ttext 0x7c00
 NASM_OPTS = -f elf
 
 # utils
-HEXDUMP = hexdump
+OBJDUMP_OPTS = -M intel -d
 
 # args
 SRCS = $(wildcard *.c emulator/*.c)
@@ -33,7 +33,8 @@ build-i386-program:
 	$(NASM) $(NASM_OPTS) i386program/crt0.asm
 	$(i386GCC) $(i386GCC_OPTS) -o i386program/main.o -c i386program/main.c
 	$(i386LD) $(i386LD_OPTS) -o program i386program/crt0.o i386program/main.o
-	$(HEXDUMP) program
+	hexdump program
+	objdump $(OBJDUMP_OPTS) i386program/main.o
 
 
 run-i386-program-on-emu: build program
