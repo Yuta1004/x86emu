@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "emulator.h"
+#include "register.h"
 
 
 /* レジスタ取得(32bit) */
@@ -23,3 +24,29 @@ void set_reg32(Emulator *emu, int reg_num, uint32_t val)
     }
     emu->registers[reg_num] = val;
 }
+
+/* eflags更新(bit) */
+void set_eflags_bit(Emulator *emu, uint8_t val, uint32_t target)
+{
+    if(val) {
+        emu->eflags |= target;
+    } else {
+        emu->eflags &= ~target;     // 00010 -> 11101
+    }
+}
+
+/* eflags更新 */
+void update_eflags_sub(Emulator *emu, uint32_t val1, uint32_t val2)
+{
+    uint64_t sub_result = (uint64_t)val1 - (uint64_t)val2;
+
+    uint8_t sign1 = (val1 >> 31);
+    uint8_t sign2 = (val2 >> 31);
+    uint8_t sign_res = (sub_result >> 31) & 1;  // 負の数になった時32bit以上は符号フラグで埋められている
+
+    set_eflags_bit(emu, sub_result >> 32, CARRY_FLAG);
+    set_eflags_bit(emu, sub_result == 0, ZERO_FLAG);
+    set_eflags_bit(emu, sign_res, SIGN_FLAG);
+    set_eflags_bit(emu, sign1 != sign2 && sign1 != sign_res, OVERFLOW_FLAG);
+}
+
