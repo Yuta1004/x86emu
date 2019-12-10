@@ -138,6 +138,12 @@ void near_jmp(Emulator *emu)
 }
 
 /* push */
+void push_rm32(Emulator *emu, ModRM *modrm)
+{
+    uint32_t val = get_rm32(emu, modrm);
+    push32(emu, val);
+}
+
 void push_r32(Emulator *emu)
 {
     uint8_t reg = get_code8(emu, 0) - 0x50;
@@ -238,6 +244,10 @@ void code_ff(Emulator *emu)
 
     case 1:
         dec_rm32(emu, &modrm);
+        break;
+
+    case 6:
+        push_rm32(emu, &modrm);
         break;
 
     default:
