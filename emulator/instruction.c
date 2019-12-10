@@ -103,6 +103,14 @@ void cmp_r32_rm32(Emulator *emu)
     update_eflags_sub(emu, r32, rm32);
 }
 
+void cmp_rm32_imm8(Emulator *emu, ModRM *modrm)
+{
+    uint32_t rm32 = get_rm32(emu, modrm);
+    uint32_t imm8 = (int32_t)get_sign_code8(emu, 0);    // 符号付き->符号なし(後で64bitに拡張するので問題ない)
+    update_eflags_sub(emu, rm32, imm8);
+    emu->eip += 1;
+}
+
 /* inc */
 void inc_r32(Emulator *emu)
 {
@@ -217,6 +225,10 @@ void code_83(Emulator *emu)
 
     case 5:
         sub_rm32_imm8(emu, &modrm);
+        break;
+
+    case 7:
+        cmp_rm32_imm8(emu, &modrm);
         break;
 
     default:
