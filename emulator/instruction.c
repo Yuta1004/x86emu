@@ -92,6 +92,17 @@ void sub_rm32_r32(Emulator *emu)
     set_rm32(emu, &modrm, rm32-r32);
 }
 
+/* cmp */
+void cmp_r32_rm32(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+    uint32_t r32 = get_r32(emu, &modrm);
+    uint32_t rm32 = get_rm32(emu, &modrm);
+    update_eflags_sub(emu, r32, rm32);
+}
+
 /* inc */
 void inc_r32(Emulator *emu)
 {
@@ -275,6 +286,9 @@ void init_instruction_table()
     // sub
     instructions[0x83] = code_83;       // sub_rm32_imm8, sub_rm16_imm8
     instructions[0x29] = sub_rm32_r32;  // sub_rm32_r32
+
+    // cmp
+    instructions[0x3B] = cmp_r32_rm32;
 
     // inc
     for(int idx = 0; idx < 8; ++ idx)

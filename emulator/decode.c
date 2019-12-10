@@ -20,6 +20,9 @@ void init_opecode_dec_table()
     opecode_dec_table[0x83] = "code_83";
     opecode_dec_table[0x29] = "sub_rm32_r32";
 
+    /* cmp */
+    opecode_dec_table[0x3B] = "cmp_r32_rm32";
+
     /* inc */
     for(int idx = 0; idx < 8; ++ idx)
         opecode_dec_table[0x50+idx] = "inc_r32";
