@@ -77,8 +77,9 @@ void add_rm32_imm8(Emulator *emu, ModRM *modrm)
 void sub_rm32_imm8(Emulator *emu, ModRM *modrm)
 {
     uint32_t r32 = get_rm32(emu, modrm);
-    int8_t imm8 = get_sign_code8(emu, 0);
-    set_rm32(emu, modrm, r32-imm8);
+    uint32_t imm8 = (int32_t)get_sign_code8(emu, 0);
+    set_rm32(emu, modrm, (uint64_t)r32-(uint64_t)imm8);
+    update_eflags_sub(emu, r32, imm8);
     emu->eip += 1;
 }
 
@@ -90,6 +91,7 @@ void sub_rm32_r32(Emulator *emu)
     uint32_t rm32 = get_rm32(emu, &modrm);
     uint32_t r32 = get_r32(emu, &modrm);
     set_rm32(emu, &modrm, rm32-r32);
+    update_eflags_sub(emu, rm32, r32);
 }
 
 /* cmp */
