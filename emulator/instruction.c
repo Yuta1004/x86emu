@@ -158,6 +158,12 @@ void near_jmp(Emulator *emu)
     return;
 }
 
+/* jcc */
+define_jmp_func(c, CARRY_FLAG);
+define_jmp_func(z, ZERO_FLAG);
+define_jmp_func(s, SIGN_FLAG);
+define_jmp_func(o, OVERFLOW_FLAG);
+
 /* push */
 void push_rm32(Emulator *emu, ModRM *modrm)
 {
@@ -316,6 +322,16 @@ void init_instruction_table()
     // jmp
     instructions[0xEB] = short_jmp;
     instructions[0xE9] = near_jmp;
+
+    // jcc
+    instructions[0x70] = jo;
+    instructions[0x71] = jno;
+    instructions[0x72] = jc;
+    instructions[0x73] = jnc;
+    instructions[0x74] = jz;
+    instructions[0x75] = jnz;
+    instructions[0x78] = js;
+    instructions[0x79] = jns;
 
     // push
     for(int idx = 0; idx < 8; ++ idx)
