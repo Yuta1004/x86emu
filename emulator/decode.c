@@ -45,6 +45,10 @@ void init_opecode_dec_table()
     opecode_dec_table[0x75] = "jnz";
     opecode_dec_table[0x78] = "js";
     opecode_dec_table[0x79] = "jns";
+    opecode_dec_table[0x7C] = "jl";
+    opecode_dec_table[0x7D] = "jnl";
+    opecode_dec_table[0x7E] = "jle";
+    opecode_dec_table[0x7F] = "jnle";
 
     /* push */
     for(int idx = 0; idx < 8; ++ idx)

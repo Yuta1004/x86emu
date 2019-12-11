@@ -164,6 +164,34 @@ define_jmp_func(z, ZERO_FLAG);
 define_jmp_func(s, SIGN_FLAG);
 define_jmp_func(o, OVERFLOW_FLAG);
 
+void jcc_jl(Emulator *emu)
+{
+    if(get_flag(emu, SIGN_FLAG) != get_flag(emu, OVERFLOW_FLAG))
+        emu->eip += (int32_t)get_sign_code8(emu, 1);
+    emu->eip += 2;
+}
+
+void jcc_jle(Emulator *emu)
+{
+    if(get_flag(emu, ZERO_FLAG) || get_flag(emu, SIGN_FLAG) != get_flag(emu, OVERFLOW_FLAG))
+        emu->eip += (int32_t)get_sign_code8(emu, 1);
+    emu->eip += 2;
+}
+
+void jcc_jnl(Emulator *emu)
+{
+    if(get_flag(emu, SIGN_FLAG) == get_flag(emu, OVERFLOW_FLAG))
+        emu->eip += (int32_t)get_sign_code8(emu, 1);
+    emu->eip += 2;
+}
+
+void jcc_jnle(Emulator *emu)
+{
+    if(get_flag(emu, ZERO_FLAG) && get_flag(emu, SIGN_FLAG) == get_flag(emu, OVERFLOW_FLAG))
+        emu->eip += (int32_t)get_sign_code8(emu, 1);
+    emu->eip += 2;
+}
+
 /* push */
 void push_rm32(Emulator *emu, ModRM *modrm)
 {
@@ -332,6 +360,10 @@ void init_instruction_table()
     instructions[0x75] = jnz;
     instructions[0x78] = js;
     instructions[0x79] = jns;
+    instructions[0x7C] = jcc_jl;
+    instructions[0x7D] = jcc_jnl;
+    instructions[0x7E] = jcc_jle;
+    instructions[0x7F] = jcc_jnle;
 
     // push
     for(int idx = 0; idx < 8; ++ idx)
