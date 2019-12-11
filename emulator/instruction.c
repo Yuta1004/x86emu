@@ -159,10 +159,10 @@ void near_jmp(Emulator *emu)
 }
 
 /* jcc */
-define_jmp_func(c, CARRY_FLAG);
-define_jmp_func(z, ZERO_FLAG);
-define_jmp_func(s, SIGN_FLAG);
-define_jmp_func(o, OVERFLOW_FLAG);
+define_jcc_func(c, CARRY_FLAG);
+define_jcc_func(z, ZERO_FLAG);
+define_jcc_func(s, SIGN_FLAG);
+define_jcc_func(o, OVERFLOW_FLAG);
 
 void jcc_jl(Emulator *emu)
 {
@@ -352,14 +352,14 @@ void init_instruction_table()
     instructions[0xE9] = near_jmp;
 
     // jcc
-    instructions[0x70] = jo;
-    instructions[0x71] = jno;
-    instructions[0x72] = jc;
-    instructions[0x73] = jnc;
-    instructions[0x74] = jz;
-    instructions[0x75] = jnz;
-    instructions[0x78] = js;
-    instructions[0x79] = jns;
+    instructions[0x70] = jcc_jo;
+    instructions[0x71] = jcc_jno;
+    instructions[0x72] = jcc_jc;
+    instructions[0x73] = jcc_jnc;
+    instructions[0x74] = jcc_jz;
+    instructions[0x75] = jcc_jnz;
+    instructions[0x78] = jcc_js;
+    instructions[0x79] = jcc_jns;
     instructions[0x7C] = jcc_jl;
     instructions[0x7D] = jcc_jnl;
     instructions[0x7E] = jcc_jle;
