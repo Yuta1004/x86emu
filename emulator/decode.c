@@ -33,7 +33,7 @@ void init_opecode_dec_table()
         opecode_dec_table[0x48+idx] = "rec_r32";
 
     /* jmp */
-    opecode_dec_table[0xE8] = "short_jmp";
+    opecode_dec_table[0xEB] = "short_jmp";
     opecode_dec_table[0xE9] = "near_jmp";
 
     /* jcc */
