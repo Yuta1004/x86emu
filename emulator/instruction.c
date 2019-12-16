@@ -8,6 +8,7 @@
 #include "modrm.h"
 #include "stack.h"
 #include "register.h"
+#include "device.h"
 
 /* mov */
 void mov_r32_imm32(Emulator *emu)
@@ -192,6 +193,25 @@ void jcc_jnle(Emulator *emu)
     emu->eip += 2;
 }
 
+/* in */
+void in_al_dx(Emulator *emu)
+{
+    uint16_t dx = get_reg32(emu, EDX) & 0xffff;
+    uint8_t val = io_in8(emu, dx);
+    set_reg8(emu, AL, val);
+    emu->eip += 1;
+}
+
+/* out */
+void out_dx_al(Emulator *emu)
+{
+    uint8_t al = get_reg8(emu, AL);
+    uint16_t dx = get_reg32(emu, EDX) & 0xffff;
+    io_out8(emu, dx, al);
+    emu->eip += 1;
+}
+
+
 /* push */
 void push_rm32(Emulator *emu, ModRM *modrm)
 {
@@ -364,6 +384,12 @@ void init_instruction_table()
     instructions[0x7D] = jcc_jnl;
     instructions[0x7E] = jcc_jle;
     instructions[0x7F] = jcc_jnle;
+
+    // in
+    instructions[0xEC] = in_al_dx;
+
+    // out
+    instructions[0xEE] = out_dx_al;
 
     // push
     for(int idx = 0; idx < 8; ++ idx)

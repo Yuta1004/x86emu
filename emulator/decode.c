@@ -50,6 +50,12 @@ void init_opecode_dec_table()
     opecode_dec_table[0x7E] = "jle";
     opecode_dec_table[0x7F] = "jnle";
 
+    /* in */
+    opecode_dec_table[0xEC] = "in_al_dx";
+
+    /* out */
+    opecode_dec_table[0xEE] = "out_dx_al";
+
     /* push */
     for(int idx = 0; idx < 8; ++ idx)
         opecode_dec_table[0x50+idx] = "push_r32";
