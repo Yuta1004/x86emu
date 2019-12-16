@@ -6,15 +6,11 @@
 #include <stdint.h>
 
 /* 定数 */
-#define REGISTERS_COUNT 8
-#define EAX 0
-#define ECX 1
-#define EDX 2
-#define EBX 3
-#define ESP 4
-#define EBP 5
-#define ESI 6
-#define EDI 7
+enum Register {
+    EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI, REGISTERS_COUNT,
+    AL=EAX,  CL=ECX,  DL=EDX,  BL=EBX,
+    AH=CL+4, CH=CL+4, DH=DL+4, BH=BL+4
+};
 
 /* 構造体(Emulator) */
 typedef struct {
