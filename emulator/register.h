@@ -15,6 +15,8 @@
 /* 関数 */
 uint32_t get_reg32(Emulator *emu, int reg_num);
 void set_reg32(Emulator *emu, int reg_num, uint32_t val);
+uint8_t get_reg8(Emulator *emu, int reg_num);
+void set_reg8(Emulator *emu, int reg_num, uint8_t val);
 void update_eflags_sub(Emulator *emu, uint32_t val1, uint32_t val2);
 
 #endif

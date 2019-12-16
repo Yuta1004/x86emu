@@ -25,6 +25,28 @@ void set_reg32(Emulator *emu, int reg_num, uint32_t val)
     emu->registers[reg_num] = val;
 }
 
+/* レジスタ取得(8bit) */
+uint8_t get_reg8(Emulator *emu, int reg_num)
+{
+    if(reg_num < 4) {
+        return (uint8_t)(emu->registers[reg_num] & 0xff);
+    } else {
+        return (uint8_t)(emu->registers[reg_num-4] & 0xff00);
+    }
+}
+
+/* レジスタ書き込み(8bit) */
+void set_reg8(Emulator *emu, int reg_num, uint8_t val)
+{
+    if(reg_num < 4) {
+        emu->registers[reg_num] &= ~(emu->registers[reg_num] & 0xff);
+        emu->registers[reg_num] |= (uint8_t)val;
+    } else {
+        emu->registers[reg_num-4] &= ~(emu->registers[reg_num] & 0xff00);
+        emu->registers[reg_num-4] |= (uint32_t)(val<<8);
+    }
+}
+
 /* eflags更新(bit) */
 void set_eflags_bit(Emulator *emu, uint8_t val, uint32_t target)
 {
