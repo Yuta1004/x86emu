@@ -45,6 +45,15 @@ void mov_rm32_imm32(Emulator *emu, ModRM *modrm)
     emu->eip += 4;
 }
 
+void mov_r8_rm8(Emulator *emu)
+{
+    emu->eip += 1;
+    ModRM modrm;
+    parse_modrm(emu, &modrm);
+    uint8_t rm8 = get_rm32(emu, &modrm) & 0xff;
+    set_r32(emu, &modrm, (uint32_t)rm8);
+}
+
 /* add */
 void add_rm32_r32(Emulator *emu)
 {
@@ -344,6 +353,7 @@ void init_instruction_table()
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0xB8+idx] = mov_r32_imm32;
     instructions[0x89] = mov_rm32_r32;
+    instructions[0x8A] = mov_r8_rm8;
     instructions[0x8B] = mov_r32_rm32;
     instructions[0xC7] = code_c7;
 

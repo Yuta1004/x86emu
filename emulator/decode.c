@@ -9,6 +9,7 @@ void init_opecode_dec_table()
     for(int idx = 0; idx < 8; ++ idx)
         opecode_dec_table[0xB8+idx] = "mov_r32_imm32";
     opecode_dec_table[0x89] = "mov_rm32_r32";
+    opecode_dec_table[0x8A] = "mov_r8_rm8";
     opecode_dec_table[0x8B] = "mov_r32_rm32";
     opecode_dec_table[0xC7] = "code_c7";
 
