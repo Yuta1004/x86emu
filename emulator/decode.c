@@ -23,10 +23,11 @@ void init_opecode_dec_table()
 
     /* cmp */
     opecode_dec_table[0x3B] = "cmp_r32_rm32";
+    opecode_dec_table[0x3C] = "cmp_al_imm8";
 
     /* inc */
     for(int idx = 0; idx < 8; ++ idx)
-        opecode_dec_table[0x50+idx] = "inc_r32";
+        opecode_dec_table[0x40+idx] = "inc_r32";
     opecode_dec_table[0xff] = "code_ff";
 
     /* dec */
