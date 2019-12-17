@@ -17,6 +17,7 @@ OBJDUMP_OPTS = -M intel -d
 SRCS = $(wildcard *.c emulator/*.c)
 OBJS = $(SRCS:.c=.o)
 ARGS =
+EXEC_BIN = program
 
 .PHONY: all clean
 
@@ -37,12 +38,8 @@ build-i386-program:
 	objdump $(OBJDUMP_OPTS) i386program/main.o
 
 
-run-i386-program-on-emu: build program
-	make run ARGS=program
-
-
 run:
-	./x86emu $(ARGS)
+	./x86emu $(EXEC_BIN) $(ARGS)
 
 
 clean:
