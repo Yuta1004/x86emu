@@ -5,9 +5,13 @@
 
 uint8_t io_in8(Emulator *emu, uint16_t port_addr)
 {
+    uint8_t inp;
+
     switch(port_addr) {
         case 0x03f8:
-            return (uint8_t)getchar();
+            inp = (uint8_t)getchar();
+            while(getchar() != 10);
+            return inp;
 
         default:
             return 0;
