@@ -30,10 +30,18 @@ build: $(OBJS)
 	$(GCC) -o x86emu $(OBJS) $(LDFLAGS)
 
 
-build-i386-program:
+build-i386-program-c:
 	$(NASM) $(NASM_OPTS) i386program/crt0.asm
 	$(i386GCC) $(i386GCC_OPTS) -o i386program/main.o -c i386program/main.c
 	$(i386LD) $(i386LD_OPTS) -o program i386program/crt0.o i386program/main.o
+	make dump-program-info
+
+build-i386-program-asm:
+	$(NASM) $(NASM_OPTS) i386program/main.asm
+	$(i386LD) $(i386LD_OPTS) -o program i386program/main.o
+	make dump-program-info
+
+dump-program-info:
 	hexdump program
 	objdump $(OBJDUMP_OPTS) i386program/main.o
 

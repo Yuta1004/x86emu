@@ -1,5 +1,6 @@
 x86emu
 program
 i386program/main.c
+i386program/main.asm
 
 *.o
