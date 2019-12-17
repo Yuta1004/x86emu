@@ -11,6 +11,13 @@
 #include "device.h"
 
 /* mov */
+void mov_r8_imm8(Emulator *emu)
+{
+    uint8_t reg = get_code8(emu, 0) - 0xb0;
+    uint8_t imm8 = get_code8(emu, 1);
+    set_reg8(emu, reg, imm8);
+    emu->eip += 2;
+}
 void mov_r32_imm32(Emulator *emu)
 {
     uint8_t reg = get_code8(emu, 0) - 0xB8;
@@ -358,6 +365,8 @@ void init_instruction_table()
     memset(instructions, 0, sizeof(instructions));
 
     // mov
+    for(int idx = 0; idx < 8; ++ idx)
+        instructions[0xB0+idx] = mov_r8_imm8;
     for(int idx = 0; idx < 8; ++ idx)
         instructions[0xB8+idx] = mov_r32_imm32;
     instructions[0x89] = mov_rm32_r32;
