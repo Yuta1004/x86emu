@@ -123,6 +123,14 @@ void cmp_rm32_imm8(Emulator *emu, ModRM *modrm)
     emu->eip += 1;
 }
 
+void cmp_al_imm8(Emulator *emu)
+{
+    uint32_t al = get_reg32(emu, AL);
+    uint32_t imm8 = (int32_t)get_sign_code8(emu, 1);
+    update_eflags_sub(emu, al, imm8);
+    emu->eip += 2;
+}
+
 /* inc */
 void inc_r32(Emulator *emu)
 {
@@ -367,6 +375,7 @@ void init_instruction_table()
 
     // cmp
     instructions[0x3B] = cmp_r32_rm32;
+    instructions[0x3C] = cmp_al_imm8;
 
     // inc
     for(int idx = 0; idx < 8; ++ idx)
