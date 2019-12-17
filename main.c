@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     // 実行時オプションチェック
     for(int arg_idx = 0; arg_idx < argc; ++ arg_idx) {
-        if(strncmp(argv[arg_idx], "--varbose", 2) == 0) {
+        if(strncmp(argv[arg_idx], "--varbose", 9) == 0) {
             varbose = true;
             argc = remove_opt_at(argc, argv, arg_idx);
         }
